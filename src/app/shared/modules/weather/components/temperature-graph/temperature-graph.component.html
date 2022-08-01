@@ -15,10 +15,10 @@
   [yAxisTickFormatting]="valueFormatting"
   [xAxisTickFormatting]="dateFormatting">
   <ng-template #tooltipTemplate let-model="model">
-    {{model.value}} °F
+    {{model.value}} {{tempUnits}}
   </ng-template>
   <ng-template #seriesTooltipTemplate let-model="model">
-    {{model[0].value}} °F
+    {{model[0].value}} {{tempUnits}}
   </ng-template>
 </ngx-charts-line-chart>
 

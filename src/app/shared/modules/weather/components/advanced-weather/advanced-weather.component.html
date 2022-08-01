@@ -1,6 +1,7 @@
 <mat-card>
   <app-weather-location-information
     *ngIf="currentWeatherInfo"
+    [selectedUnits]="selectedUnits"
     [weatherInfo]="currentWeatherInfo"
     [location]="location">
   </app-weather-location-information>
@@ -8,7 +9,9 @@
   <mat-tab-group mat-align-tabs="start" style="margin-bottom: 1rem">
     <mat-tab label="Temperature">
       <div class="graph-container" fxLayout="row" fxLayoutAlign="center center">
-        <app-temperature-graph [temperatures]="temperatures"></app-temperature-graph>
+        <app-temperature-graph [temperatures]="temperatures"
+                               [selectedUnits]="selectedUnits">
+        </app-temperature-graph>
       </div>
     </mat-tab>
     <mat-tab label="Precipitation">
@@ -18,7 +21,9 @@
     </mat-tab>
     <mat-tab label="Wind">
       <div class="graph-container" fxLayout="row" fxLayoutAlign="center center">
-        <app-wind-direction-card [windDirections]="windDirections"></app-wind-direction-card>
+        <app-wind-direction-card [windDirections]="windDirections"
+                                 [selectedUnits]="selectedUnits">
+        </app-wind-direction-card>
       </div>
     </mat-tab>
   </mat-tab-group>
@@ -30,7 +35,8 @@
                 [ngClass]="{ 'selected-thumbnail': forecast.selected }"
                 fxLayout="row" fxLayoutAlign="center center">
         <app-weather-thumbnail style="display: inline-block!important;"
-          [forecast]="forecast">
+          [forecast]="forecast"
+          [selectedUnits]="selectedUnits">
         </app-weather-thumbnail>
       </mat-card>
     </span>

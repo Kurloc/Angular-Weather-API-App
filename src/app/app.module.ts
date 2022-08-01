@@ -22,35 +22,37 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    BrowserModule,
-    HttpClientModule,
-    RouterModule,
-    AppRoutingModule,
-    MatProgressSpinnerModule,
-    MatProgressBarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    SearchableDropdownModule,
-    WeatherModule,
-    FlexModule,
-    MatCardModule,
-    MatListModule,
-    FormsModule,
-    ScrollingModule,
-    MatTabsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        BrowserModule,
+        HttpClientModule,
+        RouterModule,
+        AppRoutingModule,
+        MatProgressSpinnerModule,
+        MatProgressBarModule,
+        MatButtonModule,
+        MatSidenavModule,
+        SearchableDropdownModule,
+        WeatherModule,
+        FlexModule,
+        MatCardModule,
+        MatListModule,
+        FormsModule,
+        ScrollingModule,
+        MatTabsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonToggleModule
+    ],
   providers: [],
   exports: [],
   bootstrap: [AppComponent]

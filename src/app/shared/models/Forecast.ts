@@ -7,6 +7,7 @@ import {AdvancedViewGraphsData} from "./AdvancedViewGraphsData";
 import {IHasWindInformation} from "./IHasWindInformation";
 import {Node} from "./Node";
 import {BasicGraphNode} from "./BasicGraphNode";
+import {UnitsOfMeasurement} from "./UnitsOfMeasurement";
 
 export class Forecast extends CurrentForecast {
   public readonly forecast: Forecasts;
@@ -18,7 +19,7 @@ export class Forecast extends CurrentForecast {
     this.selected = selected;
   }
 
-  public static getGraphData(forecastday: ForecastDay): AdvancedViewGraphsData  {
+  public static getGraphData(forecastday: ForecastDay, selectedUnits: UnitsOfMeasurement = 'imperial'): AdvancedViewGraphsData  {
     let hourIndex = 0;
     let fakeRainChance = 0;
 
@@ -29,7 +30,9 @@ export class Forecast extends CurrentForecast {
     for (const hour of forecastday!.hour) {
       if (hourIndex % 3 === 0) {
         hour.time = new Date(hour.time);
-        returnTemperatureSeries.push(new Node(hour.temp_f, hour.time));
+        const tempValue = selectedUnits === 'imperial' ? hour.temp_f : hour.temp_c;
+        returnTemperatureSeries.push(new Node(tempValue, hour.time));
+
         const precipitationChance = hour.chance_of_rain === 0 || !hour.chance_of_rain ? hour.chance_of_snow : hour.chance_of_rain;
         returnPrecipitationSeries.push(new Node(precipitationChance, new Date(
           hour.time.getFullYear(),

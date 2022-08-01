@@ -9,6 +9,7 @@ import {
 import {BehaviorSubject, take} from 'rxjs';
 import {DatePipe} from "@angular/common";
 import {BasicGraphNode} from "../../../../models/BasicGraphNode";
+import {UnitsOfMeasurement} from "../../../../models/UnitsOfMeasurement";
 
 @Component({
   selector: 'app-temperature-graph',
@@ -19,10 +20,16 @@ import {BasicGraphNode} from "../../../../models/BasicGraphNode";
 })
 export class TemperatureGraphComponent implements OnInit {
   private _temperatures!: BasicGraphNode[];
-  get temperatures(): BasicGraphNode[] {
+
+  public get tempUnits(): string {
+    if (this.selectedUnits === 'imperial') {
+      return '°F';
+    }
+    return '°C';
+  }
+  public get temperatures(): BasicGraphNode[] {
     return this._temperatures;
   }
-
   @Input() set temperatures(value: BasicGraphNode[]) {
     this._temperatures = value;
 
@@ -39,14 +46,17 @@ export class TemperatureGraphComponent implements OnInit {
       });
   }
 
-  view: [number, number] = [700, 225];
-  showXAxis = true;
-  showYAxis = true;
-  gradient = false;
-  showLegend = false;
-  showXAxisLabel = false;
-  showYAxisLabel = false;
-  colorScheme: any = {
+  @Input() selectedUnits: UnitsOfMeasurement = 'imperial';
+
+
+  public view: [number, number] = [700, 225];
+  public showXAxis = true;
+  public showYAxis = true;
+  public gradient = false;
+  public showLegend = false;
+  public showXAxisLabel = false;
+  public showYAxisLabel = false;
+  public colorScheme: any = {
     domain: ['#C7B42C']
   };
 

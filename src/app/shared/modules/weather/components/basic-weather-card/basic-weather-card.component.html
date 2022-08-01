@@ -1,5 +1,6 @@
 <div (click)="onClickCard()">
   <app-weather-location-information
+    [selectedUnits]="selectedUnits"
     [weatherInfo]="currentForecast"
     [location]="location">
   </app-weather-location-information>
@@ -7,7 +8,8 @@
   <div fxLayout="row" fxLayoutAlign="center center">
       <span *ngFor="let forecast of forecasts.forecastday" style="width: 5rem!important;margin-right: .5rem">
         <app-weather-thumbnail style="display: inline-block!important;"
-          [forecast]="forecast">
+                               [selectedUnits]="selectedUnits"
+                               [forecast]="forecast">
         </app-weather-thumbnail>
       </span>
   </div>

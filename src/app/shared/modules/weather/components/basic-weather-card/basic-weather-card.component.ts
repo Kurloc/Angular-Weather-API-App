@@ -5,6 +5,7 @@ import {
 import {WeatherLocation} from "../../../../models/WeatherLocation";
 import {CurrentForecastInformation} from "../../../../models/CurrentForecastInformation";
 import {Forecasts} from "../../../../models/Forecasts";
+import {UnitsOfMeasurement} from "../../../../models/UnitsOfMeasurement";
 
 export function getDateObj(string: Date | string): Date {
   return new Date(string);
@@ -16,6 +17,7 @@ export function getDateObj(string: Date | string): Date {
   styleUrls: ['./basic-weather-card.component.css']
 })
 export class BasicWeatherCardComponent implements OnInit {
+  @Input() selectedUnits: UnitsOfMeasurement = 'imperial';
   @Input() forecast!: Forecast;
   public get currentForecast(): CurrentForecastInformation { return this.forecast.current; }
   public get forecasts(): Forecasts { return this.forecast.forecast; }

@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {IWeatherLocationInfo} from "../../../../models/IWeatherLocationInfo";
 import {ILocationInformation} from "../../../../models/ILocationInformation";
+import {UnitsOfMeasurement} from "../../../../models/UnitsOfMeasurement";
 
 export function getDateObj(string: Date | string): Date {
   return new Date(string);
@@ -25,6 +26,7 @@ export class WeatherLocationInformationComponent implements OnInit {
   }
 
   @Input() location!: ILocationInformation;
+  @Input() selectedUnits: UnitsOfMeasurement = 'imperial';
 
   get localDate(): Date {
     return this._localDate;

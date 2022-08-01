@@ -3,6 +3,7 @@ import {IWeatherLocationInfo, IWeatherThumbnailInfo} from "../../../../models/IW
 import {ILocationInformation} from "../../../../models/ILocationInformation";
 import {BasicGraphNode} from "../../../../models/BasicGraphNode";
 import {IHasWindInformation} from "../../../../models/IHasWindInformation";
+import {UnitsOfMeasurement} from "../../../../models/UnitsOfMeasurement";
 
 @Component({
   selector: 'app-advanced-weather',
@@ -16,6 +17,7 @@ export class AdvancedWeatherComponent implements OnInit {
   @Input() temperatures!: BasicGraphNode[];
   @Input() precipitationChances: BasicGraphNode[] = [];
   @Input() windDirections: IHasWindInformation[] = [];
+  @Input() selectedUnits: UnitsOfMeasurement = 'imperial';
   @Output() onThumbnailSelected = new EventEmitter<IWeatherThumbnailInfo>();
 
   constructor() { }

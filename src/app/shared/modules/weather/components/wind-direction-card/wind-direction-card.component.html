@@ -4,8 +4,8 @@
          class="inline-block mat-weather-card-container"
          style="display: inline-block;">
       <app-wind-direction-thumbnail
-        [windSpeed]="windDirection.wind_mph"
-        [windSpeedUnit]="'mph'"
+        [windSpeed]="windSpeed"
+        [windSpeedUnit]="windSpeedUnits"
         [windDirection]="windDirection.wind_dir"
         [date]="windDirection.time">
       </app-wind-direction-thumbnail>

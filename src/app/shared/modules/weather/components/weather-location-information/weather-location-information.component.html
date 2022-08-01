@@ -6,18 +6,26 @@
              src="{{weatherInfo.condition.icon}}">
       </span>
     <span>
-        <span class="current-temperature-value">{{ weatherInfo.temp_f }}</span>
-        <span class="current-temperature-units">°F</span>
+        <span class="current-temperature-value">
+          <span *ngIf="selectedUnits==='imperial'">{{ weatherInfo.temp_f }}</span>
+          <span *ngIf="selectedUnits==='metric'">{{ weatherInfo.temp_c }}</span>
+        </span>
+        <span class="current-temperature-units">
+          <span *ngIf="selectedUnits==='imperial'">°F</span>
+          <span *ngIf="selectedUnits==='metric'">°C</span>
+        </span>
       </span>
     <span class="inline-block">
         <div class="misc-font">
-          Precipitation: {{weatherInfo.precipitationIn | number: '1.2-2'}} in
+          <span *ngIf="selectedUnits==='imperial'">Precipitation: {{weatherInfo.precipitationIn | number: '1.2-2'}} in</span>
+          <span *ngIf="selectedUnits==='metric'">Precipitation: {{weatherInfo.precipitationMm | number: '1.2-2'}} mm</span>
         </div>
         <div class="misc-font">
           Humidity: {{weatherInfo.humidity}}%
         </div>
         <div class="misc-font">
-          Wind: {{weatherInfo.wind_mph}} mph
+          <span *ngIf="selectedUnits==='imperial'">Wind: {{weatherInfo.wind_mph}} mph</span>
+          <span *ngIf="selectedUnits==='metric'">Wind: {{weatherInfo.wind_kph}} kph</span>
         </div>
     </span>
   </div>

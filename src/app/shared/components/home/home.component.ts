@@ -15,6 +15,8 @@ import {WeatherThumbnailInfo} from "../../models/WeatherThumbnailInfo";
 import {ForecastDay} from "../../models/ForecastDay";
 import {IHasWindInformation} from "../../models/IHasWindInformation";
 import {LoadingService} from "../../services/loading.service";
+import {LocalStorageAutoBehaviorSubject} from "../../utilities/LocalStorageAutoBehaviorSubject";
+import {UnitsOfMeasurement} from "../../models/UnitsOfMeasurement";
 
 export class AdvancedWeatherCard {
   currentWeatherInfo!: IWeatherLocationInfo;
@@ -62,6 +64,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
 
   public selectedAdvancedViewDate: Date = new Date();
   public selectedTab = new AutoBehaviorSubject<number>(0);
+  public selectedUnits = new LocalStorageAutoBehaviorSubject<UnitsOfMeasurement>('selectedUnits', 'imperial');
 
   public get locationItems(): IAutoBehaviorSubject<WeatherLocationSearchResult[]> {
     return this.weatherService.weatherLocations;
@@ -133,10 +136,14 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
 
         this.filterBasicWeatherCards(this.locationFilterString.value);
       });
+
+    if (this.selectedUnits.value !== 'imperial' && this.selectedUnits.value !== 'metric') {
+      this.selectedUnits.value = 'imperial';
+    }
   }
 
   ngOnInit(): void {
-    if (!this.userWeatherLocations.value || this.userWeatherLocations.value?.length === 0 || !this.userWeatherLocations.value?.length)
+    if (!this.userWeatherLocations.value || !this.userWeatherLocations.value?.length || this.userWeatherLocations.value?.length === 0)
       return;
 
     const locationsToLoad = this.userWeatherLocations.value?.map(z => new LocationLookup(z.name, z.region));
@@ -145,7 +152,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngAfterViewInit(): void {
     const userLocations = this.userWeatherLocations.value;
-    if (!userLocations || userLocations.length === 0) {
+    if (!userLocations || userLocations.length === 0 || userLocations.length === undefined) {
       this.selectedTab.value = 1;
       return;
     }
@@ -217,22 +224,20 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
 
   public onAdvancedThumbnailSelected($event: IWeatherThumbnailInfo) {
     const date = new Date(new Date($event.date));
-    const newForecastIndex = this._lastAdvancedForecast.forecast.forecastday.findIndex(z => {
-      const d = new Date(z.date);
-      const x = new Date(
-        d.getUTCFullYear(),
-        d.getUTCMonth(),
-        d.getUTCDate(),
+    const newForecastIndex = this._lastAdvancedForecast.forecast.forecastday.findIndex(forecast => {
+      const forecastDate = new Date(forecast.date);
+      const timelessDate = new Date(
+        forecastDate.getUTCFullYear(),
+        forecastDate.getUTCMonth(),
+        forecastDate.getUTCDate(),
         0,
         0,
         0,
         0);
-      const matches = x.getUTCFullYear() === date.getUTCFullYear() &&
-                      x.getUTCMonth()    === date.getUTCMonth() &&
-                      x.getUTCDate()     === date.getUTCDate()
 
-      console.log('x', x, '\nvs', date, '\nmatches', matches);
-      return matches;
+      return timelessDate.getUTCFullYear() === date.getUTCFullYear() &&
+             timelessDate.getUTCMonth()    === date.getUTCMonth()    &&
+             timelessDate.getUTCDate()     === date.getUTCDate()
     });
     const oldForecast = this._lastAdvancedForecast.forecast.forecastday[newForecastIndex];
 
@@ -242,12 +247,22 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
     }
 
     this._lastAdvancedForecast.date = new Date(this._lastAdvancedForecast.date);
-    const advancedViewGraphsData = Forecast.getGraphData(newForecast);
-
+    this._forecastForSelectedLocation = newForecast;
     this.selectedAdvancedWeatherCard!.currentWeatherInfo = newForecast;
+
+    this.setAdvancedWeatherGraphData(newForecast);
+  }
+
+  public setAdvancedWeatherGraphData(forecast: ForecastDay) {
+    const advancedViewGraphsData = Forecast.getGraphData(forecast, this.selectedUnits.value);
     this.selectedAdvancedWeatherCard!.temperatures = advancedViewGraphsData.temperatures;
     this.selectedAdvancedWeatherCard!.precipitationChances = advancedViewGraphsData.precipitationChances;
     this.selectedAdvancedWeatherCard!.windDirections = advancedViewGraphsData.windDirectionInfos;
+  }
+
+  public toggleSelectedUnits(selectedUnits: UnitsOfMeasurement) {
+    this.selectedUnits.value=selectedUnits;
+    this.setAdvancedWeatherGraphData(this._forecastForSelectedLocation);
   }
 
   private initSelectedAdvancedWeatherCardInfo(incomingForecast: Forecast) {
@@ -272,7 +287,7 @@ export class HomeComponent implements AfterViewInit, OnInit, OnDestroy {
             0);
         })
 
-        const advancedViewGraphsData = Forecast.getGraphData(newForecast.forecast.forecastday[0]);
+        const advancedViewGraphsData = Forecast.getGraphData(newForecast.forecast.forecastday[0], this.selectedUnits.value);
         this._lastAdvancedForecast = forecast;
         this.selectedAdvancedWeatherCard = new AdvancedWeatherCard(
           newForecast.current,

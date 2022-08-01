@@ -64,10 +64,6 @@ export class SearchableDropdownComponent implements OnInit {
     return this.filterForObjectItem(i).toString().toLowerCase();
   }
 
-  public logging(e: any) {
-    console.log(e);
-  }
-
   public filterForObjectItem(i: any) {
     let returnString = this.searchPattern;
     const keys = this.findAllKeys();

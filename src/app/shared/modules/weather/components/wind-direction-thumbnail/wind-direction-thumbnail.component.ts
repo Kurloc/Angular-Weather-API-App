@@ -71,19 +71,20 @@ export class WindDirectionThumbnailComponent implements OnInit {
   }
 
   get WindArrowSize(): string {
-    let normalizedSpeed = Number(this.windSpeed);
+    let speed = Number(this.windSpeed);
+    let normalizedSpeedMultiplier = 1;
     if (this.windSpeedUnit == 'kph')
-      normalizedSpeed *= 1.60934;
+      normalizedSpeedMultiplier = 1.60934;
 
-    if (normalizedSpeed < 5)
+    if (speed < 5 * normalizedSpeedMultiplier)
       return '12px';
-    else if (normalizedSpeed < 11)
+    else if (speed < 11 * normalizedSpeedMultiplier)
       return '16px';
-    else if (normalizedSpeed < 19)
+    else if (speed < 19 * normalizedSpeedMultiplier)
       return '20px';
-    else if (normalizedSpeed < 27)
+    else if (speed < 27 * normalizedSpeedMultiplier)
       return '24px';
-    else if (normalizedSpeed < 35)
+    else if (speed < 35 * normalizedSpeedMultiplier)
       return '28px';
     else
       return '32px';
