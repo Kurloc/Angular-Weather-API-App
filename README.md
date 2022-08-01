@@ -24,8 +24,14 @@ Preview
 ### Home Page / Basic Weather View
 ![home-page](misc/home-page.png)
 
-### Advanced View
-![advanced-view](./misc/advanced-view.png)
+### Advanced View - Temperature
+![advanced-view](./misc/advanced-view-temperature.png)
+
+### Advanced View - Precipitation
+![advanced-view](./misc/advanced-view-precipitation.png)
+
+### Advanced View - Wind
+![advanced-view](./misc/advanced-view-wind.png)
 
 Table of contents
 =================
