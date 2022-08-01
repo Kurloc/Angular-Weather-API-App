@@ -9,6 +9,10 @@
           Weather Advanced View
         </mat-card-title>
         <mat-card-content>
+          <i *ngIf="!selectedAdvancedWeatherCard">
+            Please go to 'Manage Weather Locations' to add and or select a location. Then you will be able to view advanced weather for that location here.
+          </i>
+
           <app-advanced-weather *ngIf="selectedAdvancedWeatherCard"
                                 (onThumbnailSelected)="onAdvancedThumbnailSelected($event)"
                                 [currentWeatherInfo]="selectedAdvancedWeatherCard.currentWeatherInfo"

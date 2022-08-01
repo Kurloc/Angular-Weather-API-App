@@ -8,6 +8,7 @@ import {IAutoBehaviorSubject} from "../../../utilities/IAutoBehaviorSubject";
 import {forkJoin, Observable} from "rxjs";
 import {WeatherLocationSearchResult} from "../../../models/WeatherLocationSearchResult";
 import {CurrentForecast} from "../../../models/CurrentForecast";
+import {LoadingService} from "../../../services/loading.service";
 
 export class LocationLookup {
   public name: string;
@@ -27,7 +28,7 @@ export class WeatherService {
   userWeatherLocations: IAutoBehaviorSubject<WeatherLocationSearchResult[]>;
   weatherLocations: IAutoBehaviorSubject<WeatherLocationSearchResult[]>;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private loadingService: LoadingService) {
     this.userWeatherLocations = new LocalStorageAutoBehaviorSubject<WeatherLocationSearchResult[]>(
       'user-weather-locations',
       [])
@@ -52,6 +53,7 @@ export class WeatherService {
   }
 
   public getWeatherForecast(locationLookup: LocationLookup, numOfDays = 3): void {
+    this.loadingService.loadingProgressBar.value = true;
     this.requestWeatherForecasts(locationLookup, numOfDays)
       .subscribe(forecast => {
         const forecastValues = this.forecasts.value;
@@ -69,10 +71,12 @@ export class WeatherService {
         }
 
         this.forecasts.value = forecastValues;
+        this.loadingService.loadingProgressBar.value = false;
       });
   }
 
   public getWeatherForecasts(locationLookups: LocationLookup[], numOfDays = 3): void {
+    this.loadingService.loadingProgressBar.value = true;
     const requests: Observable<Forecast>[] = [];
     for (const locationLookup of locationLookups) {
       if (!locationLookup || !locationLookup.name || !locationLookup.region)
@@ -91,16 +95,19 @@ export class WeatherService {
       })
 
       this.forecasts.value = [...newForecasts];
+      this.loadingService.loadingProgressBar.value = false;
     });
   }
 
   public getWeatherLocations(searchString: string): void {
+    this.loadingService.loadingProgressBar.value = true;
     const key = environment.weatherApiKey;
     const queryParams = `?key=${key}&q=${searchString}`;
     this.httpClient
       .get<WeatherLocationSearchResult[]>(`https://api.weatherapi.com/v1/search.json${queryParams}`)
       .subscribe(locations => {
         this.weatherLocations.value = locations;
+        this.loadingService.loadingProgressBar.value = false;
       });
   }
 

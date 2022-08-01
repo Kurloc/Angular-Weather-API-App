@@ -1,5 +1,6 @@
 <mat-card>
   <app-weather-location-information
+    *ngIf="currentWeatherInfo"
     [weatherInfo]="currentWeatherInfo"
     [location]="location">
   </app-weather-location-information>
