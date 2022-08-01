@@ -1,0 +1,18 @@
+<div class="wind-speed" aria-label="Saturday" fxLayout="row" fxLayoutAlign="center center">
+  <span>{{windSpeed}} {{windSpeedUnit}}</span>
+</div>
+
+<div class="inline-block wind-arrow-container" fxLayout="row" fxLayoutAlign="center center">
+  <div class="image-container">
+    <span fxLayout="row" fxLayoutAlign="center center">
+      <img [style]='{transform: "rotate(" + WindArrowRotationFromDirection + "deg)", width: WindArrowSize}'
+               class="wind-arrow"
+               alt="loading..." src="https://ssl.gstatic.com/m/images/weather/wind_unselected.svg"></span>
+  </div>
+</div>
+
+<div class="temperature-label" fxLayout="row" fxLayoutAlign="center center">
+  <div class="temperature-high-label">
+    <span class="inline-block">{{date | date: 'h a'}}</span>
+  </div>
+</div>

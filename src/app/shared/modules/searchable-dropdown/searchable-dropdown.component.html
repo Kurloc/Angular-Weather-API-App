@@ -1,0 +1,48 @@
+<!-- NGMODEL BASED SEARCH W/ INPUTS -->
+<mat-form-field style='overflow-x: hidden;' class='w-100' [appearance]='appearance'>
+  <mat-label>{{outerLabelText}}</mat-label>
+  <mat-select
+    id='searchField'
+    style='overflow-x: hidden;'
+    disableOptionCentering
+    ngDefaultControl
+    (keydown)='$event.stopPropagation()'
+    (selectionChange)='emitSelectedItem()'
+    [required]='required'
+    [ngModelOptions]='{standalone: true}'
+    [(ngModel)]='selectedItem'>
+    <div style="position: relative">
+      <div style="display: inline-block;width: 100%">
+        <input matInput
+               type='text'
+               autocomplete='off'
+               class="search-input w-100"
+               ngDefaultControl
+               [placeholder]='innerLabelText'
+               [ngModelOptions]='{standalone: true}'
+               [ngModel]='itemSearchString | async'
+               (ngModelChange)='updateItemSearchString($event)'>
+      </div>
+      <div style="display: inline-block; position: absolute;right: 0;top: -5%;">
+        <button *ngIf="itemSearchString | async"
+                matSuffix
+                mat-icon-button
+                aria-label="Clear"
+                (click)="itemSearchString.next('')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <mat-option disabled *ngIf="noOptionsInstruction && displayList.length === 0">{{noOptionsInstruction}}</mat-option>
+    <mat-option>--</mat-option>
+    <mat-option *ngFor='let item of displayList;let i = index'
+                class='soc-clinician-option'
+                ngDefaultControl
+                [id]='"searchableDropdown-option-" + i'
+                [value]='item'>
+        <span *ngIf="itemSearchType === 'object'">{{filterForObjectItem(item)}}</span>
+        <span *ngIf="itemSearchType === 'string'">{{stringDisplay(item)}}</span>
+    </mat-option>
+  </mat-select>
+</mat-form-field>

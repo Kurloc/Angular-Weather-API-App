@@ -1,0 +1,101 @@
+<div>
+  <span style="position: absolute;top: 12px;right: 12px">{{(now.subject | async) | date: 'long'}}</span>
+  <mat-tab-group mat-align-tabs="start" style="margin-bottom: 1rem"
+                 [selectedIndex]='(selectedTab.subject | async)'
+                 (selectedIndexChange)='selectedTab.value = $event'>
+    <mat-tab label="Advanced Weather View" [ngModel]="0">
+      <mat-card style="margin: .5rem;height: 80vh;min-width: 964px;">
+        <mat-card-title>
+          Weather Advanced View
+        </mat-card-title>
+        <mat-card-content>
+          <app-advanced-weather *ngIf="selectedAdvancedWeatherCard"
+                                (onThumbnailSelected)="onAdvancedThumbnailSelected($event)"
+                                [currentWeatherInfo]="selectedAdvancedWeatherCard.currentWeatherInfo"
+                                [location]="selectedAdvancedWeatherCard.location"
+                                [forecasts]="selectedAdvancedWeatherCard.forecasts"
+                                [temperatures]="selectedAdvancedWeatherCard.temperatures"
+                                [precipitationChances]="selectedAdvancedWeatherCard.precipitationChances"
+                                [windDirections]="selectedAdvancedWeatherCard.windDirections">
+          </app-advanced-weather>
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+    <mat-tab label="Manage Weather Locations">
+      <mat-card style="margin-bottom: .25rem;min-width: 634px;" (click)="clickedOutside()">
+        <mat-card-title>
+          Weather Location Lookup
+        </mat-card-title>
+        <mat-card-content>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="row" fxLayoutAlign="space-between start" style="width: 375px">
+              <app-searchable-dropdown
+                class='w-100'
+                appearance='outline'
+                itemSearchType='object'
+                innerLabelText='Select a clinician to create a profile for.'
+                noOptionsInstruction="Begin typing to search for a location"
+                searchPattern='${name}, ${region}'
+                (itemSearchStringEmitter)="locationSearchString.value=$event"
+                (selectedItemEmitter)="selectedSearchLocation.value=$event"
+                [clearSearchAfterItemUpdate]="false"
+                [errorMessages]='{ "Clinician Required": "Please select a clinician..." }'
+                [items]='locationItems.subject | async'
+                [outerLabelText]='"Location"'>
+              </app-searchable-dropdown>
+              <div>
+                <div style="margin-bottom: .15rem">
+                  <button mat-raised-button
+                          style="width: 141px"
+                          [disabled]="!selectedSearchLocation.value"
+                          (click)="createLocation(selectedSearchLocation.value)">
+                    Add Location
+                  </button>
+                </div>
+                <div>
+                  <button mat-raised-button
+                          style="width: 141px"
+                          [disabled]="!selectedBasicWeatherCard"
+                          (click)="removeLocation()">
+                    Remove Location
+                  </button>
+                </div>
+              </div>
+            </div>
+            <mat-form-field>
+              <mat-label>Location Search</mat-label>
+              <input matInput type="text" autocomplete="off"
+                     [ngModel]="locationFilterString.subject | async"
+                     (ngModelChange)="locationFilterString.value = $event"/>
+              <button *ngIf="locationFilterString.subject | async"
+                      matSuffix
+                      mat-icon-button
+                      aria-label="Clear"
+                      (click)="locationFilterString.value=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div>
+            <i>View advanced weather data for a selected location by clicking 'Advanced Weather View' in the top left.</i>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="basic-weather-card-container">
+        <mat-card-title>Weather Locations</mat-card-title>
+        <mat-card-content>
+          <cdk-virtual-scroll-viewport itemSize="5" class="basic-weather-card-virtual-list">
+            <mat-card *cdkVirtualFor="let forecast of (displayedUserWeatherLocationCardInfos.subject | async)"
+                      class="mat-elevation-z8 basic-weather-card"
+                      [style]="{ 'background-color': forecast.selected ? 'rgba(0, 0, 0, 0.12)' : 'rgb(66, 66, 66)' }">
+              <app-basic-weather-card
+                [forecast]="forecast"
+                (onClick)="onBasicWeatherCardClick($event)">
+              </app-basic-weather-card>
+            </mat-card>
+          </cdk-virtual-scroll-viewport>
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+  </mat-tab-group>
+</div>

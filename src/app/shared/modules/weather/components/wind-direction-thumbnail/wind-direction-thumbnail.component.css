@@ -1,0 +1,16 @@
+.wind-arrow {
+  transform-origin: 50% 50%;
+}
+
+.wind-speed {
+  margin-bottom: 24px;
+}
+
+.wind-arrow-container {
+  margin-bottom: 12px;
+}
+
+.image-container {
+  height: 38px;
+  width: 38px;
+}

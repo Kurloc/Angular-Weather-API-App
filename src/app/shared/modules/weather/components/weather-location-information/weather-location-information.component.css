@@ -1,0 +1,49 @@
+.weather-card-location-info {
+  margin-bottom: .5rem;
+}
+
+.margin-bottom-spacing {
+  margin-bottom: .15rem;
+}
+
+.date-spacing {
+  margin-right: 4px
+}
+
+.current-condition-image {
+  height: 64px;
+  margin: 1px 4px 0;
+  width: 64px;
+}
+
+.current-temperature-value {
+  height: 64px;
+  margin: 1px 4px 0;
+  width: 64px;
+  font-weight: 400;
+  line-height: 60px;
+  font-size: 48px;
+}
+
+.current-temperature-units {
+  height: 64px;
+  font-size: 24px;
+  line-height: 30px;
+  margin-top: 12px;
+  margin-right: 8px;
+  vertical-align: top;
+}
+
+.current-temperature-separator {
+  height: 64px;
+  font-size: 24px;
+  line-height: 30px;
+  margin-top: 12px;
+  margin-right: 8px;
+  vertical-align: top;
+}
+
+.misc-font {
+  color: #c8cace;
+  font-size: 12px;
+}

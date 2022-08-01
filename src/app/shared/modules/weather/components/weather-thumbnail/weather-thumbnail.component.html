@@ -1,0 +1,16 @@
+<div>
+  <span class="day-label"
+       aria-label="Saturday"
+       fxLayout="row" fxLayoutAlign="center center">
+    {{date.getDay() | shortHandDay}}
+  </span>
+
+  <span class="condition-image-container" fxLayout="row" fxLayoutAlign="center center">
+    <img class="condition-image" alt="{{forecast.condition.text}}" src="{{forecast.condition.icon}}">
+  </span>
+
+  <span class="temperature-label" fxLayout="row" fxLayoutAlign="center center">
+    <span class="inline-block temperature-high-label">{{temperatureHigh}}°</span>
+    <span class="inline-block temperature-low-label">{{temperatureLow}}°</span>
+  </span>
+</div>

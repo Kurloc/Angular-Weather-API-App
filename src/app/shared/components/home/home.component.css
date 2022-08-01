@@ -1,0 +1,14 @@
+.basic-weather-card-virtual-list {
+  height: 69vh;
+  width: 100%;
+}
+
+.basic-weather-card-container {
+  padding-bottom: 1vh;
+  min-width: 634px
+}
+
+.basic-weather-card {
+  margin-bottom: .25rem;
+  cursor: pointer;
+}

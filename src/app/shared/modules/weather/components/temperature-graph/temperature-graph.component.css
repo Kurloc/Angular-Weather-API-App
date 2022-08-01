@@ -1,0 +1,7 @@
+.header {
+  margin-bottom: .5rem;
+}
+.chart-container .ngx-charts .line-highlight {
+   display: block !important;
+ }
+

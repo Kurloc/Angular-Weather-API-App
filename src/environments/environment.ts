@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  weatherApiKey: "" // This should not be stored here
+                    // these calls should most likely go through a thin API that we control
+                    // and that will protect our key from being stolen by a hacker.
 };
 
 /*

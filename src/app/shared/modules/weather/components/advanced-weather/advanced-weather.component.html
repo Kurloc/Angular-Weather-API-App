@@ -1,0 +1,37 @@
+<mat-card>
+  <app-weather-location-information
+    [weatherInfo]="currentWeatherInfo"
+    [location]="location">
+  </app-weather-location-information>
+
+  <mat-tab-group mat-align-tabs="start" style="margin-bottom: 1rem">
+    <mat-tab label="Temperature">
+      <div class="graph-container" fxLayout="row" fxLayoutAlign="center center">
+        <app-temperature-graph [temperatures]="temperatures"></app-temperature-graph>
+      </div>
+    </mat-tab>
+    <mat-tab label="Precipitation">
+      <div class="graph-container" fxLayout="row" fxLayoutAlign="center center">
+        <app-precipitation-graph [precipitationChances]="precipitationChances"></app-precipitation-graph>
+      </div>
+    </mat-tab>
+    <mat-tab label="Wind">
+      <div class="graph-container" fxLayout="row" fxLayoutAlign="center center">
+        <app-wind-direction-card [windDirections]="windDirections"></app-wind-direction-card>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <span *ngFor="let forecast of forecasts" style="margin-right: .5rem">
+      <mat-card style="width: 8rem!important;cursor: pointer;"
+                (click)="onThumbnailClick(forecast)"
+                [ngClass]="{ 'selected-thumbnail': forecast.selected }"
+                fxLayout="row" fxLayoutAlign="center center">
+        <app-weather-thumbnail style="display: inline-block!important;"
+          [forecast]="forecast">
+        </app-weather-thumbnail>
+      </mat-card>
+    </span>
+  </div>
+</mat-card>

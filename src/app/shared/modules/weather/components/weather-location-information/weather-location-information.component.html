@@ -1,0 +1,41 @@
+<div style="display: inline-block;width: 50%">
+  <div fxLayout="row" fxLayoutAlign="start center" class="margin-bottom-spacing">
+      <span>
+        <img class="current-condition-image"
+             alt="{{weatherInfo.condition.text}}"
+             src="{{weatherInfo.condition.icon}}">
+      </span>
+    <span>
+        <span class="current-temperature-value">{{ weatherInfo.temp_f }}</span>
+        <span class="current-temperature-units">°F</span>
+      </span>
+    <span class="inline-block">
+        <div class="misc-font">
+          Precipitation: {{weatherInfo.precipitationIn | number: '1.2-2'}} in
+        </div>
+        <div class="misc-font">
+          Humidity: {{weatherInfo.humidity}}%
+        </div>
+        <div class="misc-font">
+          Wind: {{weatherInfo.wind_mph}} mph
+        </div>
+    </span>
+  </div>
+</div>
+
+<div style="display: inline-block;width: 50%">
+  <div fxLayout="row" fxLayoutAlign="end center" class="margin-bottom-spacing">
+    {{location.name}}, {{location.region}}
+  </div>
+  <div fxLayout="row" fxLayoutAlign="end center" class="margin-bottom-spacing misc-font">
+    <span class="date-spacing">{{localDate.getUTCDay() | longHandDay}}</span>
+    <span>
+      <span>{{localDate.getUTCFullYear()}}/</span>
+      <span>{{localDate.getUTCMonth() | leadingZeros: 2}}/</span>
+      <span>{{localDate.getUTCDate() | leadingZeros: 2}}</span>
+    </span>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="end center" class="misc-font">
+    {{weatherInfo.condition.text}}
+  </div>
+</div>

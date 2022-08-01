@@ -1,0 +1,24 @@
+<ngx-charts-area-chart
+  *ngIf='precipitationChances.length > 0'
+  style="fill: white;"
+  [view]="view"
+  [scheme]="colorScheme"
+  [results]="precipitationChances"
+  [gradient]="gradient"
+  [xAxis]="showXAxis"
+  [yAxis]="showYAxis"
+  [legend]="showLegend"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [xAxisTickFormatting]="dateFormatting">
+  <ng-template #tooltipTemplate let-model="model">
+    {{model.value}}%
+  </ng-template>
+  <ng-template #seriesTooltipTemplate let-model="model">
+    {{model[0].value}}%
+  </ng-template>
+</ngx-charts-area-chart>
+
+<div *ngIf='precipitationChances.length === 0 || !precipitationChances'>
+  No data available
+</div>
